@@ -1,14 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package splash;
-import java.sql.*;
+
 import java.awt.Image;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+import java.sql.*;
+import javax.swing.*;
+
 /**
  *
  * @author law
@@ -27,19 +23,10 @@ public class login extends javax.swing.JFrame {
         logo.setIcon(new ImageIcon(image));
     }
     //Database Connection
-Connection con;
-    PreparedStatement pst;
-    ResultSet rs;
-    Connect();
+
     
-    public void Connect(){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con=DriverManager.getConnection("jdbc:mysql://localhost/ems","root","");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+  
+    
     /**
      * This method is called from within the constructor to initializes the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,6 +85,11 @@ Connection con;
         login_btn.setText("LOGIN");
         login_btn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         login_btn.setBorderPainted(false);
+        login_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                login_btnActionPerformed(evt);
+            }
+        });
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo/qcu.png"))); // NOI18N
 
@@ -140,7 +132,6 @@ Connection con;
                 .addGap(0, 37, Short.MAX_VALUE))
         );
 
-        pass.getAccessibleContext().setAccessibleParent(password);
         username.getAccessibleContext().setAccessibleParent(username);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -156,6 +147,34 @@ Connection con;
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void login_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_btnActionPerformed
+//login button
+    String user = username.getText();
+    char[] passw = password.getPassword();
+
+    try {
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ems", "root", "");
+
+        // Use PreparedStatement to prevent SQL injection
+        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+        try (PreparedStatement stmnt = con.prepareStatement(query)) {
+            stmnt.setString(1, user);
+            stmnt.setString(2, new String(passw)); // Convert char[] to String
+
+            ResultSet rs = stmnt.executeQuery();
+
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Login successful  N"+user);
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid username or password");
+            }
+        }
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+    }//GEN-LAST:event_login_btnActionPerformed
 
     /**
      * @param args the command line arguments
