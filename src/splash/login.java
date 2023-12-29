@@ -1,6 +1,5 @@
 
 package splash;
-
 import java.awt.Image;
 import java.sql.*;
 import javax.swing.*;
@@ -149,7 +148,6 @@ public class login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void login_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_btnActionPerformed
-//login button
     String user = username.getText();
     char[] passw = password.getPassword();
 
@@ -158,22 +156,37 @@ public class login extends javax.swing.JFrame {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ems", "root", "");
 
         // Use PreparedStatement to prevent SQL injection
-        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+        String query = "SELECT * FROM users WHERE username = ? AND password = ? AND role = ?";
         try (PreparedStatement stmnt = con.prepareStatement(query)) {
             stmnt.setString(1, user);
             stmnt.setString(2, new String(passw)); // Convert char[] to String
+            stmnt.setString(3, "admin"); // Assuming "admin" is the role for administrators
 
             ResultSet rs = stmnt.executeQuery();
 
             if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "Login successful  N"+user);
+                // Login successful for admin
+                dashboard admindb = new dashboard(user); // Pass the username to the constructor
+                admindb.setVisible(true);
+                this.dispose();
             } else {
-                JOptionPane.showMessageDialog(null, "Invalid username or password");
+                // Check for client role
+                stmnt.setString(3, "student"); // Assuming "student" is the role for students
+                rs = stmnt.executeQuery();
+
+                if (rs.next()) {
+                    // Login successful for student
+          
+                    JOptionPane.showMessageDialog(null, "Login successful N" + user);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid username or password");
+                }
             }
         }
     } catch (Exception e) {
         System.out.println(e);
     }
+    
     }//GEN-LAST:event_login_btnActionPerformed
 
     /**
