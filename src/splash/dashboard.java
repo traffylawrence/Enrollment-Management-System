@@ -70,6 +70,7 @@ private String currentUser;
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         date_time = new javax.swing.JLabel();
+        closebtn = new java.awt.Button();
         jPanel2 = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
         db_btn = new javax.swing.JButton();
@@ -82,12 +83,23 @@ private String currentUser;
         jDesktopPane1 = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel3.setBackground(new java.awt.Color(0, 153, 51));
 
         date_time.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         date_time.setForeground(new java.awt.Color(255, 255, 255));
         date_time.setText("date & time");
+
+        closebtn.setActionCommand("X");
+        closebtn.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        closebtn.setForeground(new java.awt.Color(255, 51, 0));
+        closebtn.setLabel("X");
+        closebtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closebtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -96,14 +108,18 @@ private String currentUser;
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(date_time, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(closebtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(date_time)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(closebtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(date_time))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 204));
@@ -145,7 +161,7 @@ private String currentUser;
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("WELCOME");
 
-        user_name.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        user_name.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         user_name.setForeground(new java.awt.Color(255, 255, 255));
         user_name.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_name.setText("user");
@@ -190,14 +206,15 @@ private String currentUser;
                 .addComponent(student_btn)
                 .addGap(18, 18, 18)
                 .addComponent(quit_btn)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(user_name)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jDesktopPane1.setBackground(new java.awt.Color(255, 153, 51));
+        jDesktopPane1.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -207,7 +224,7 @@ private String currentUser;
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 474, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -217,8 +234,9 @@ private String currentUser;
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -228,7 +246,9 @@ private String currentUser;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jDesktopPane1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -247,20 +267,31 @@ private String currentUser;
     }// </editor-fold>//GEN-END:initComponents
 
     private void db_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_db_btnActionPerformed
-        // TODO add your handling code here:
+dashb dashb=new dashb();
+jDesktopPane1.removeAll();
+jDesktopPane1.add(dashb).setVisible(true);
     }//GEN-LAST:event_db_btnActionPerformed
 
     private void course_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_course_btnActionPerformed
-        // TODO add your handling code here:
+course course=new course();
+jDesktopPane1.removeAll();
+jDesktopPane1.add(course).setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_course_btnActionPerformed
 
     private void teacher_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teacher_btnActionPerformed
-        // TODO add your handling code here:
+        teacher teacher=new teacher();
+jDesktopPane1.removeAll();
+jDesktopPane1.add(teacher).setVisible(true);
     }//GEN-LAST:event_teacher_btnActionPerformed
 
     private void quit_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quit_btnActionPerformed
         // TODO add your handling code here:
+        this.dispose(); 
     }//GEN-LAST:event_quit_btnActionPerformed
+
+    private void closebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closebtnActionPerformed
+this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_closebtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -298,6 +329,7 @@ private String currentUser;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.Button closebtn;
     private javax.swing.JButton course_btn;
     private javax.swing.JLabel date_time;
     private javax.swing.JButton db_btn;
