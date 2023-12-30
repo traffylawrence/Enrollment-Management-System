@@ -8,6 +8,9 @@ package splash;
  *
  * @author law
  */
+import java.sql.*;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 public class dashb extends javax.swing.JInternalFrame {
 
@@ -19,7 +22,27 @@ public class dashb extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI ui=(BasicInternalFrameUI)this.getUI();
         ui.setNorthPane(null);
-        
+    try {
+    Class.forName("com.mysql.cj.jdbc.Driver");
+    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ems", "root", "");
+    Statement stmt = con.createStatement();
+    String sql = "SELECT first_name, last_name, course, teacher FROM student_tbl";
+    ResultSet rs = stmt.executeQuery(sql);
+    
+    while (rs.next()) {
+        String fullName = rs.getString("first_name") + " " + rs.getString("last_name");
+        String course = rs.getString("course");
+        String advisor = rs.getString("teacher");
+
+        String[] tbData = {fullName, course, advisor};
+        DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
+        tblModel.addRow(tbData);
+    }
+
+    con.close();
+} catch (Exception e) {
+    System.out.println(e.getMessage());
+}
     }
 
     /**
@@ -59,13 +82,10 @@ public class dashb extends javax.swing.JInternalFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Student Fullname", "Course Taken", "Advisor"
+                "Student Name", "Course Taken", "Advisor"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

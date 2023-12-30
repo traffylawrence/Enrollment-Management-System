@@ -20,24 +20,30 @@ import java.util.Date;
 public class dashboard extends javax.swing.JFrame {
 
 private String currentUser;
+ private String userRole;
     /**
      * Creates new form dashboard
      */
-    public dashboard(String username) {
-          initComponents();
-          initDate();
-         currentUser=username;
-           user_name.setText(currentUser);
-  
-        
-        //stretch img
-        Icon i = logo.getIcon();
-        ImageIcon icon=(ImageIcon)i;
-        Image image = icon.getImage().getScaledInstance(logo.getWidth(),logo.getHeight(), Image.SCALE_SMOOTH );
-        logo.setIcon(new ImageIcon(image));
-    }
+    public dashboard(String username, String role) {
+    initComponents();
+        initDate();
+        currentUser = username;
+        userRole = role;  // Set the user role
+        user_name.setText(currentUser);
 
-    private dashboard() {
+        // Stretch img
+        Icon i = logo.getIcon();
+        ImageIcon icon = (ImageIcon) i;
+        Image image = icon.getImage().getScaledInstance(logo.getWidth(), logo.getHeight(), Image.SCALE_SMOOTH);
+        logo.setIcon(new ImageIcon(image));
+
+        // Disable buttons based on the user role
+        if (userRole.equals("student")) {
+            course_btn.setEnabled(false);
+            teacher_btn.setEnabled(false);
+        }
+    }
+    private dashboard(String user) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
   private void initDate() {
@@ -148,6 +154,11 @@ private String currentUser;
         });
 
         student_btn.setText("STUDENT");
+        student_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                student_btnActionPerformed(evt);
+            }
+        });
 
         quit_btn.setText("QUIT");
         quit_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -293,6 +304,13 @@ jDesktopPane1.add(teacher).setVisible(true);
 this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_closebtnActionPerformed
 
+    private void student_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_student_btnActionPerformed
+        // TODO add your handling code here:
+        student student=new student();
+jDesktopPane1.removeAll();
+jDesktopPane1.add(student).setVisible(true);
+    }//GEN-LAST:event_student_btnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -323,7 +341,7 @@ this.dispose();        // TODO add your handling code here:
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new dashboard().setVisible(true);
+               
             }
         });
     }

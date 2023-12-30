@@ -22,6 +22,27 @@ public class course extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI ui=(BasicInternalFrameUI)this.getUI();
         ui.setNorthPane(null);
+        try{
+        Class.forName("com.mysql.cj.jdbc.Driver");
+           Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ems", "root", "");
+            Statement stmt = con.createStatement();
+            String sql ="select * from course_tbl";
+            ResultSet rs=stmt.executeQuery(sql);
+            while(rs.next()){
+                String id=String.valueOf(rs.getInt("PositionID"));
+                String course=rs.getString("course_name");
+                  String year=rs.getString("year_duration");
+                  String tbdata[]={id,course,year};
+                  DefaultTableModel tblmodel = (DefaultTableModel)jTable1.getModel();
+                  //add string array to jtable
+                  tblmodel.addRow(tbdata);
+            }
+            
+            
+           con.close();
+}catch (Exception e){
+    System.out.println(e.getMessage());
+}
         
     }
 
@@ -226,27 +247,7 @@ try {
 
     private void showbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showbtnActionPerformed
 //fetch data frm db
-try{
-        Class.forName("com.mysql.cj.jdbc.Driver");
-           Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ems", "root", "");
-            Statement stmt = con.createStatement();
-            String sql ="select * from course_tbl";
-            ResultSet rs=stmt.executeQuery(sql);
-            while(rs.next()){
-                String id=String.valueOf(rs.getInt("PositionID"));
-                String course=rs.getString("course_name");
-                  String year=rs.getString("year_duration");
-                  String tbdata[]={id,course,year};
-                  DefaultTableModel tblmodel = (DefaultTableModel)jTable1.getModel();
-                  //add string array to jtable
-                  tblmodel.addRow(tbdata);
-            }
-            
-            
-           con.close();
-}catch (Exception e){
-    System.out.println(e.getMessage());
-}
+
     }//GEN-LAST:event_showbtnActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
